@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: invent-api
+    ports:
+      - "8000:8000"
+    environment:
+      UVICORN_WORKERS: 2
+    volumes:
+      - ./model_artifacts:/app/model_artifacts
+      - ./models:/app/models
+    restart: unless-stopped
+
+  demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: invent-demo
+    command: >
+      sh -c "streamlit run demo.py --server.port=8501 --server.address=0.0.0.0"
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: "http://api:8000"
+    depends_on:
+      - api
+    volumes:
+      - ./model_artifacts:/app/model_artifacts
+      - ./models:/app/models
+    restart: unless-stopped
