@@ -2,20 +2,6 @@ import re
 import pandas as pd
 import numpy as np
 
-"""
-
-Metin İstatistikleri Entegre Edildi: Artık train_sota.py dosyasında word_count veya caps_ratio (bağırma oranı) gibi özellikleri de modele besleyebilirsiniz. Sinirli müşteriler genellikle BÜYÜK HARF kullanır, bu özellik puan tahmininde çok işe yarar.
-
-Entegrasyon Eksikliği Giderildi: get_text_features fonksiyonunu yazmışsın ama preprocess_dataframe içinde çağırmamışsın. Bunu ana akışa dahil ettik.
-
-Logaritmik Dönüşüm (Önemli!): Fiyat (price) genellikle "sağa çarpık" (right-skewed) dağılır. 10 dolarlık ürünle 1000 dolarlık ürün arasındaki farkı modelin daha iyi anlaması için Log-Price ekledik.
-
-Döngüsel Zaman (Cyclical Time Features): Ay (1-12) verisi döngüseldir. 12. ay ile 1. ay birbirine çok yakındır ama sayısal olarak uzaktır. Bunu çözmek için Sinüs/Kosinüs dönüşümü ekledik. Bu, SOTA bir tekniktir.
-
-Tutarlılık: Lambda fonksiyonları yerine kendi yazdığınız statik metodları çağırdık.
-
-"""
-
 class DataPreprocessor:
     """
     Veri temizleme, özellik üretimi ve doğrulama merkezi.
@@ -161,5 +147,6 @@ class DataPreprocessor:
         df = DataPreprocessor.get_text_stats(df)
 
         return df
+
 
 
